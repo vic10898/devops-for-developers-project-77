@@ -167,9 +167,9 @@ resource "yandex_compute_instance" "web" {
 
 # База данных PostgreSQL как сервис
 resource "yandex_mdb_postgresql_cluster" "db_cluster" {
-  name        = "redmine-db-cluster"
-  environment = "PRESTABLE"
-  network_id  = yandex_vpc_network.network.id
+  name               = "redmine-db-cluster"
+  environment        = "PRESTABLE"
+  network_id         = yandex_vpc_network.network.id
   security_group_ids = [yandex_vpc_security_group.db_sg.id]
 
   config {
@@ -257,8 +257,8 @@ resource "yandex_alb_virtual_host" "web_virtual_host" {
 }
 
 resource "yandex_alb_load_balancer" "web_alb" {
-  name       = "web-load-balancer"
-  network_id = yandex_vpc_network.network.id
+  name               = "web-load-balancer"
+  network_id         = yandex_vpc_network.network.id
   security_group_ids = [yandex_vpc_security_group.alb_sg.id]
 
   allocation_policy {
@@ -314,9 +314,9 @@ resource "local_file" "ansible_inventory" {
   file_permission = "0644"
   content         = <<EOT
 [webservers]
-%{ for idx, ip in yandex_compute_instance.web[*].network_interface[0].nat_ip_address ~}
+%{for idx, ip in yandex_compute_instance.web[*].network_interface[0].nat_ip_address~}
 app-${idx + 1} ansible_host=${ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_ed25519
-%{ endfor ~}
+%{endfor~}
 EOT
 }
 

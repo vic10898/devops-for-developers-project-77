@@ -54,6 +54,8 @@ terraform-plan-vault:
 	export TF_VAR_yc_folder_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_yc_folder_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_ACCESS_KEY_ID=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_access_key_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_SECRET_ACCESS_KEY=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_secret_access_key | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_datadog_api_key=$$(ansible-vault decrypt --output=- ansible/group_vars/webservers/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_datadog_api_key | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_datadog_app_key=$$(ansible-vault decrypt --output=- ansible/group_vars/webservers/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_datadog_app_key | awk '{print $$2}' | tr -d '"') && \
 	terraform -chdir=terraform plan
 
 terraform-apply-vault:
@@ -62,6 +64,8 @@ terraform-apply-vault:
 	export TF_VAR_yc_folder_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_yc_folder_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_ACCESS_KEY_ID=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_access_key_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_SECRET_ACCESS_KEY=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_secret_access_key | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_datadog_api_key=$$(ansible-vault decrypt --output=- ansible/group_vars/webservers/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_datadog_api_key | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_datadog_app_key=$$(ansible-vault decrypt --output=- ansible/group_vars/webservers/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_datadog_app_key | awk '{print $$2}' | tr -d '"') && \
 	terraform -chdir=terraform apply
 
 terraform-destroy-vault:
@@ -70,6 +74,8 @@ terraform-destroy-vault:
 	export TF_VAR_yc_folder_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_yc_folder_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_ACCESS_KEY_ID=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_access_key_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_SECRET_ACCESS_KEY=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_secret_access_key | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_datadog_api_key=$$(ansible-vault decrypt --output=- ansible/group_vars/webservers/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_datadog_api_key | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_datadog_app_key=$$(ansible-vault decrypt --output=- ansible/group_vars/webservers/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_datadog_app_key | awk '{print $$2}' | tr -d '"') && \
 	terraform -chdir=terraform destroy
 
 terraform-import-dns:
@@ -78,6 +84,8 @@ terraform-import-dns:
 	export TF_VAR_yc_folder_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_yc_folder_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_ACCESS_KEY_ID=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_access_key_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_SECRET_ACCESS_KEY=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_secret_access_key | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_datadog_api_key=$$(ansible-vault decrypt --output=- ansible/group_vars/webservers/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_datadog_api_key | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_datadog_app_key=$$(ansible-vault decrypt --output=- ansible/group_vars/webservers/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_datadog_app_key | awk '{print $$2}' | tr -d '"') && \
 	terraform -chdir=terraform import yandex_dns_recordset.a_record dnsd98oc0ilc5s1f69bj/magical-lovelace.ru./A && \
 	terraform -chdir=terraform import yandex_dns_recordset.www_record dnsd98oc0ilc5s1f69bj/www.magical-lovelace.ru./A
 

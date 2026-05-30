@@ -11,7 +11,7 @@ redmine_db_user: redmine_user
 redmine_db_password: "{{ vault_redmine_db_password | default('') }}"
 
 # Переменные для Datadog Agent
-datadog_site: "datadoghq.com"
+datadog_site: "us5.datadoghq.com"
 datadog_api_key: "{{ vault_datadog_api_key | default('') }}"
 
 # Конфигурация интеграции http_check
