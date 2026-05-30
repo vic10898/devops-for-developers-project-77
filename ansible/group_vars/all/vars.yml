@@ -5,7 +5,6 @@ pip_install_packages:
 
 # Переменные для Redmine
 redmine_port: 80
-redmine_db_host: rc1a-o0qmnm7or1c8dglq.mdb.yandexcloud.net
 redmine_db_port: 6432
 redmine_db_name: redmine
 redmine_db_user: redmine_user
