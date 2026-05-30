@@ -1,0 +1,9 @@
+---
+- name: Подготовка серверов и деплой Redmine
+  hosts: all
+  become: yes
+  roles:
+    - { role: geerlingguy.pip, tags: [setup] }
+    - { role: geerlingguy.docker, tags: [setup] }
+    - { role: redmine, tags: [deploy] }
+    - { role: datadog.datadog, tags: [monitoring], when: "'webservers' in group_names" }

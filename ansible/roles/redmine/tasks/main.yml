@@ -1,0 +1,33 @@
+---
+- name: Создание директории для проекта Redmine
+  file:
+    path: "{{ lookup('env', 'HOME') }}/redmine"
+    state: directory
+    mode: '0755'
+  tags: [deploy]
+
+- name: Генерация файла .env с переменными окружения
+  template:
+    src: .env.j2
+    dest: "{{ lookup('env', 'HOME') }}/redmine/.env"
+    mode: '0600'
+  tags: [deploy]
+
+- name: Генерация файла docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ lookup('env', 'HOME') }}/redmine/docker-compose.yml"
+    mode: '0644'
+  tags: [deploy]
+
+- name: Запуск контейнера Redmine через Docker Compose
+  command: docker compose up -d
+  args:
+    chdir: "{{ lookup('env', 'HOME') }}/redmine"
+  register: compose_up
+  tags: [deploy]
+
+- name: Вывод лога запуска
+  debug:
+    var: compose_up.stdout
+  tags: [deploy]

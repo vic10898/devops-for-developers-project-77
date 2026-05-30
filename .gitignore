@@ -1,0 +1,17 @@
+.vault-password
+.DS_Store
+*.retry
+
+# Ansible ignored files
+ansible/.vault-password
+ansible/*.retry
+ansible/.ansible
+
+# Terraform ignored files
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+.terraform.lock.hcl
+terraform.tfvars
+terraform.tfvars.json
