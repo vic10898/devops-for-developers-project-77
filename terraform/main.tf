@@ -161,7 +161,7 @@ resource "yandex_compute_instance" "web" {
   }
 
   metadata = {
-    ssh-keys = "yc-user:${file(var.ssh_public_key_path)}"
+    ssh-keys = "ubuntu:${file(var.ssh_public_key_path)}"
   }
 }
 
@@ -315,7 +315,7 @@ resource "local_file" "ansible_inventory" {
   content         = <<EOT
 [webservers]
 %{ for idx, ip in yandex_compute_instance.web[*].network_interface[0].nat_ip_address ~}
-app-${idx + 1} ansible_host=${ip} ansible_user=yc-user ansible_ssh_private_key_file=~/.ssh/id_ed25519
+app-${idx + 1} ansible_host=${ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_ed25519
 %{ endfor ~}
 EOT
 }
