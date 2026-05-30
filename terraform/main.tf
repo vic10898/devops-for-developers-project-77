@@ -300,6 +300,12 @@ resource "yandex_alb_load_balancer" "web_alb" {
       }
     }
   }
+
+  timeouts {
+    create = "20m"
+    update = "20m"
+    delete = "20m"
+  }
 }
 
 # Генерация инвентаря для Ansible
