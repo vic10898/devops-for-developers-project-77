@@ -14,3 +14,12 @@
     - { role: geerlingguy.docker, tags: [setup] }
     - { role: redmine, tags: [deploy] }
     - { role: datadog.datadog, tags: [monitoring], when: "'webservers' in group_names" }
+
+  post_tasks:
+    - name: Configure Upmon website uptime check cron job
+      ansible.builtin.cron:
+        name: "Upmon heartbeat ping"
+        minute: "*/5"
+        job: 'curl -sf http://localhost > /dev/null || exit 1 && curl -fsS --retry 3 {{ upmon_ping_url }} > /dev/null'
+      when: "'webservers' in group_names"
+

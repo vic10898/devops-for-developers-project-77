@@ -23,3 +23,7 @@ datadog_checks:
         url: "http://localhost:{{ redmine_port }}"
         timeout: 5
         collect_response_time: true
+
+# URL для проверки доступности в Upmon
+upmon_ping_url: "https://upmon.net/c07602b2-d368-45ae-9934-56c33602b7b9"
+
