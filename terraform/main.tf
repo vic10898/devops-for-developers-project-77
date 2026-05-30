@@ -329,3 +329,27 @@ resource "local_file" "ansible_vars" {
 redmine_db_host: "${[for h in yandex_mdb_postgresql_cluster.db_cluster.host : h.fqdn][0]}"
 EOT
 }
+
+# Данные существующей DNS зоны
+data "yandex_dns_zone" "zone" {
+  dns_zone_id = var.dns_zone_id
+}
+
+# DNS A-запись для основного домена
+resource "yandex_dns_recordset" "a_record" {
+  zone_id = data.yandex_dns_zone.zone.id
+  name    = "magical-lovelace.ru."
+  type    = "A"
+  ttl     = 600
+  data    = [yandex_alb_load_balancer.web_alb.listener[0].endpoint[0].address[0].external_ipv4_address[0].address]
+}
+
+# DNS A-запись для поддомена www
+resource "yandex_dns_recordset" "www_record" {
+  zone_id = data.yandex_dns_zone.zone.id
+  name    = "www.magical-lovelace.ru."
+  type    = "A"
+  ttl     = 600
+  data    = [yandex_alb_load_balancer.web_alb.listener[0].endpoint[0].address[0].external_ipv4_address[0].address]
+}
+

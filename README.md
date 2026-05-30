@@ -5,6 +5,12 @@
 
 Этот проект автоматизирует развертывание масштабируемой инфраструктуры в облаке Yandex Cloud с использованием подхода **Infrastructure as Code (IaC)** и деплой приложения Redmine.
 
+## Ссылка на задеплоенное приложение
+Приложение Redmine доступно по домену:
+- HTTP: [http://magical-lovelace.ru](http://magical-lovelace.ru)
+- HTTPS: [https://magical-lovelace.ru](https://magical-lovelace.ru) (используется самоподписанный SSL-сертификат)
+
+
 ## Архитектура
 Инфраструктура состоит из:
 1. **Двух веб-серверов** с приложением Redmine, запущенным внутри Docker-контейнеров.

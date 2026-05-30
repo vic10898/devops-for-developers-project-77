@@ -71,3 +71,13 @@ terraform-destroy-vault:
 	export AWS_ACCESS_KEY_ID=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_access_key_id | awk '{print $$2}' | tr -d '"') && \
 	export AWS_SECRET_ACCESS_KEY=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_secret_access_key | awk '{print $$2}' | tr -d '"') && \
 	terraform -chdir=terraform destroy
+
+terraform-import-dns:
+	@export TF_VAR_yc_token=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_yc_token | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_yc_cloud_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_yc_cloud_id | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_yc_folder_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_yc_folder_id | awk '{print $$2}' | tr -d '"') && \
+	export AWS_ACCESS_KEY_ID=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_access_key_id | awk '{print $$2}' | tr -d '"') && \
+	export AWS_SECRET_ACCESS_KEY=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS_ROOT) | grep vault_aws_secret_access_key | awk '{print $$2}' | tr -d '"') && \
+	terraform -chdir=terraform import yandex_dns_recordset.a_record dnsd98oc0ilc5s1f69bj/magical-lovelace.ru./A && \
+	terraform -chdir=terraform import yandex_dns_recordset.www_record dnsd98oc0ilc5s1f69bj/www.magical-lovelace.ru./A
+
