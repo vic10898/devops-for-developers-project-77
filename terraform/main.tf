@@ -34,7 +34,7 @@ resource "yandex_vpc_security_group" "alb_sg" {
     protocol          = "TCP"
     description       = "Allow health checks from ALB load balancer"
     predefined_target = "loadbalancer_healthchecks"
-    port              = 80
+    port              = 30080
   }
 
   egress {
