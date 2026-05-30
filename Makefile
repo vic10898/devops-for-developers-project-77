@@ -31,8 +31,36 @@ vault-edit-all:
 terraform-init:
 	terraform -chdir=terraform init
 
+terraform-plan:
+	terraform -chdir=terraform plan
+
+terraform-apply:
+	terraform -chdir=terraform apply
+
+terraform-destroy:
+	terraform -chdir=terraform destroy
+
 terraform-validate:
 	terraform -chdir=terraform validate
 
 terraform-fmt:
 	terraform -chdir=terraform fmt
+
+# Вспомогательные команды для деплоя с использованием учетных данных из Ansible Vault
+terraform-plan-vault:
+	@export TF_VAR_yc_token=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_token | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_yc_cloud_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_cloud_id | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_yc_folder_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_folder_id | awk '{print $$2}' | tr -d '"') && \
+	terraform -chdir=terraform plan
+
+terraform-apply-vault:
+	@export TF_VAR_yc_token=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_token | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_yc_cloud_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_cloud_id | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_yc_folder_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_folder_id | awk '{print $$2}' | tr -d '"') && \
+	terraform -chdir=terraform apply
+
+terraform-destroy-vault:
+	@export TF_VAR_yc_token=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_token | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_yc_cloud_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_cloud_id | awk '{print $$2}' | tr -d '"') && \
+	export TF_VAR_yc_folder_id=$$(ansible-vault decrypt --output=- ansible/group_vars/all/vault.yml $(VAULT_FLAGS) | grep vault_yc_folder_id | awk '{print $$2}' | tr -d '"') && \
+	terraform -chdir=terraform destroy

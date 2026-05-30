@@ -19,3 +19,16 @@ variable "yc_zone" {
   default     = "ru-central1-a"
   description = "Yandex Cloud Zone"
 }
+
+variable "db_password" {
+  type        = string
+  description = "PostgreSQL Database password"
+  sensitive   = true
+  default     = "Qwerty10ka"
+}
+
+variable "ssh_public_key_path" {
+  type        = string
+  description = "Path to SSH public key used to connect to VMs"
+  default     = "~/.ssh/id_ed25519.pub"
+}

@@ -36,6 +36,20 @@
    make terraform-fmt
    ```
 
+3. **Развертывание инфраструктуры**:
+   Секреты для подключения к Yandex Cloud (токен, ID каталога и облака) можно передать из Ansible Vault:
+   ```bash
+   make terraform-apply-vault
+   ```
+   *Или передайте их через переменные окружения напрямую:*
+   ```bash
+   TF_VAR_yc_token="<oauth_token>" TF_VAR_yc_cloud_id="<cloud_id>" TF_VAR_yc_folder_id="<folder_id>" make terraform-apply
+   ```
+
+После успешного выполнения Terraform сгенерирует файлы:
+- `ansible/inventory.ini` — с IP-адресами созданных ВМ.
+- `ansible/group_vars/all/terraform_vars.yml` — с адресом созданной облачной БД.
+
 ---
 
 ## Управление конфигурацией (Ansible)
@@ -60,3 +74,16 @@
    ```bash
    make setup
    ```
+
+---
+
+## Удаление ресурсов
+
+Для уничтожения всех созданных в облаке ресурсов выполните:
+```bash
+make terraform-destroy-vault
+```
+или с переменными окружения:
+```bash
+TF_VAR_yc_token="<oauth_token>" TF_VAR_yc_cloud_id="<cloud_id>" TF_VAR_yc_folder_id="<folder_id>" make terraform-destroy
+```
